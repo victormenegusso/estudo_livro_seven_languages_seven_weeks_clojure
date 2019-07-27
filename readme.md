@@ -30,6 +30,7 @@ Este comando vai fazer com que o leiningen instale as dependencias, inicie/chama
 **obs:** ao iniciar o console do clojure pode ocorrer o seguinte erro: ```Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again``` para corrigir basta executar: ```ulimit -c unlimited```.
 *ver mais sobre o problema*
 
+### Chamando funções
 ```clojure
 (println "oi")
 
@@ -81,7 +82,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 ;; 8.0
 ```
 
-*Strings*
+### Strings
 ```clojure
 (println "mestre yoda\nluke\ndarth vader")
 
@@ -101,7 +102,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 ;; true
 ```
 
-*Booleanos e Expressões*
+### Booleanos e Expressões
 
 ```clojure
 (= 1 1.0)
@@ -118,7 +119,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 
 ```
 
-Simples formas de 'if'
+*Simples formas de 'if'*
 ```clojure
 (if true (println "true it is."))
 ;; true it is.
@@ -130,4 +131,80 @@ Simples formas de 'if'
 (if false (println "true") (println "false"))
 ;; false
 ;; nill 
+```
+
+
+### List, Maps Sets and Vectors
+
+Em Clojure Listas, Mapas e Vetores são as grandes estrutura de dados
+
+*Lista*
+São uma coleção ordenada, sendo que os elementos podems ser qualquer coisa. No Clojure listas são usadas para código e vetores são usados para data. 
+
+```clojure
+(1 2 3)
+;;falha pois  Listas são avaliadas como função, por isso não conseguimos fazer desta maneira, para ter a lista temos que
+
+(list 1 2 3)
+
+;; ou 
+
+'(1 2 3)
+```
+
+Operações
+
+```clojure
+(first '(1 2 3))
+;; 1
+
+(last '(1 2 3))
+;; 3
+
+(rest '(1 2 3))
+;; (2 3)
+
+(cons 0 '(1 2 3))
+;; (0 1 2 3)
+```
+
+obs:
+```clojure
+(class '(1 2 3))
+;; clojure.lang.PersistentList
+```
+
+*Vectors*
+Semelhante a lista, mas são otimizadops para acessos randomicos *(acessar qualquer posição do vertor)*
+
+```clojure
+[1 2 3]
+;; [1 2 3]
+
+(class [1 2 3])
+;; clojure.lang.PersistentVector
+```
+
+```clojure
+(first [1 2 3])
+;; 1
+
+(nth [10 20 30] 2)
+;; 30
+
+(nth [10 20 30] 0)
+;; 10
+
+(last [1 2 3])
+;; 3
+
+(rest [1 2 3])
+;; (2 3)
+
+;; vetores tambem são funções, passar o index como arg
+([1 2 3] 2)
+;; 3
+
+(concat [1] [2])
+;; (1 2)
 ```
