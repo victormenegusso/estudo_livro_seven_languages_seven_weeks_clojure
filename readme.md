@@ -1,5 +1,7 @@
 # Intro
 
+Resumo do capitulo *7. Clojure* do livro **Seven Languages in Seven Weeks** do *Bruce A. Tate*
+
 ## Day 1: Training Luke
 
 *Instalação*
@@ -120,6 +122,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 ```
 
 *Simples formas de 'if'*
+
 ```clojure
 (if true (println "true it is."))
 ;; true it is.
@@ -139,6 +142,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 Em Clojure Listas, Mapas e Vetores são as grandes estrutura de dados
 
 *Lista*
+
 São uma coleção ordenada, sendo que os elementos podems ser qualquer coisa. No Clojure listas são usadas para código e vetores são usados para data. 
 
 ```clojure
@@ -175,6 +179,7 @@ obs:
 ```
 
 *Vectors*
+
 Semelhante a lista, mas são otimizadops para acessos randomicos *(acessar qualquer posição do vertor)*
 
 ```clojure
@@ -208,3 +213,101 @@ Semelhante a lista, mas são otimizadops para acessos randomicos *(acessar qualq
 (concat [1] [2])
 ;; (1 2)
 ```
+
+*SETs*
+
+Semelhante as listas, mas não possue elementos repetidos.
+
+```clojure
+
+#{:nave1 :nave2 :nave3}
+;; #{:nave2 :nave3 :nave1}
+
+(class #{:nave1 :nave2 :nave3})
+;; clojure.lang.PersistentHashSet
+
+(def espacoaereo #{:nave1 :nave2 :nave3})
+;; #'user/espacoaereo
+
+(count espacoaereo)
+;; 3
+
+(sort espacoaereo)
+;; (:nave1 :nave2 :nave3)
+
+(sorted-set 2 3 1)
+;; #{1 2 3}
+
+(clojure.set/union #{:luke} #{:vader})
+;;#{:vader :luke}
+
+(clojure.set/difference #{1 2 3} #{2})
+;; #{1 3}
+
+(#{1 2 3} 2)
+;; (#{1 2 3} 2)
+
+(#{1 2 3} 5)
+;; nil
+```
+
+*Maps*
+
+Semelhante as outras linguagens, 'Chave Valor'
+
+```clojure
+{:chewie :wookie :lea :human}
+;; {:chewie :wookie, :lea :human}
+
+
+{:chewie :wookie :lea}
+;; Syntax error reading source at (REPL:1:23).
+;;Map literal must contain an even number of forms
+
+
+;; uma forma mais fácil de ler
+{:chewie :wookie, :lea :human}
+;; {:chewie :wookie, :lea :human}
+
+```
+
+```clojure
+(def mentors {:darth-vador "obi wan", :luke "yoda"})
+;; #'user/mentors
+
+;; Busca por chave
+(mentors :luke)
+;; "yoda"
+
+(:luke mentors)
+;; "yoda"
+```
+
+*Definindo funções*
+
+A forma para definir as funções `(defn [params] body)`
+
+```clojure
+(defn force-it [] (str "use the force." "Luke."))
+
+
+;; adicionando um DOC a função
+(defn force-it 
+    "The first function a young Jedi needs"
+    [] 
+    (str "use the force." "Luke."))
+
+(doc force-it)
+;;([])
+;;  The first function a young Jedi needs
+;; nil
+
+;; adicionando um parametro na função
+(defn force-it 
+    "The first function a young Jedi needs"
+    [jedi] 
+    (str "use the force." jedi))
+```
+
+*Bindings*
+
