@@ -437,3 +437,149 @@ Forma de criar `fn [parameters*] body`
 (filter #(< % 3) v)
 ;; (2 1)
 ```
+
+### Entrevista
+
+...
+
+## Day 2: Yoda and the Force
+
+### Recursion with loop and recur
+
+```clojure
+
+;; estamos criando uma função recursiva para ver o tamanho de um vector
+;; 'inc' é um incrementador https://clojuredocs.org/clojure.core/inc
+;; obtem a calda de um vector
+(defn size [v] 
+    (if (empty? v)
+        0
+        (inc (size (rest v)))))
+
+(size [1 2 3])
+;; 3
+```
+
+**Importante**
+Diferente das outras linguagens funcionais que trabalham com recursão em calda *( https://en.wikipedia.org/wiki/Tail_call )* por padrão. O Clojure não suporta implicitamente isso, por causa de limitações da JVM. Para isso devemos usar o `loop` e `recur`
+
+https://clojure.org/about/functional_programming#_recursive_looping
+
+```clojure
+(loop [x x-initial-value, y y-initial-value] (do-something-with xy))
+```
+
+```clojure
+(defn size [v] 
+    (loop [l v, c 0]
+    (if (empty? l)
+        c
+        (recur (rest l) (inc c)))))
+
+
+(size [1 2 3])
+;; 3
+```
+
+### Sequences
+
+Sequences encapsula todas collections *(set, maps, vectors e semelhantes)* , strings, file system structures *(strams, directoreies)*
+
+https://clojure.org/reference/sequences
+
+#### Tests
+
+```clojure
+;; Returns true if (pred x) is logical true for every x in coll, else false. https://clojuredocs.org/clojure.core/every_q
+(every? number? [1 2 3 :four])
+;; false
+
+;; se algum da lista ser verdade é retornado true
+(some nil? [1 2 nil])
+;; true
+
+(not-every? odd? [1 2 3])
+
+(not-any? number? [:one :two :three])
+;; true
+```
+
+#### Changin a sequence
+
+```clojure
+(def words ["luke" "chewie" "han" "lando"])
+
+(filter (fn [word] (> (count word) 4)) words)
+;; ("chewie" "lando")
+
+(map (fn [x] (* x x)) [1 1 2 3 5])
+;; (1 1 4 9 25)
+
+(reduce + [1 2 3 4])
+;; 10
+
+```
+
+### Lazy Evaluation
+
+### Infinite Sequences and take
+
+### defrecord and protocls
+
+### Macros
+
+## Day 3: An Eye for Evil
+
+### References and Transactional Memory
+
+#### References
+
+### Working with Atoms
+
+#### Building an Atom Cache
+
+### Working with Agents
+
+### Futures
+
+### What We've Missed
+
+### Metadata
+
+### Java Integration
+
+
+### Multimethods
+
+### Thread State
+
+## Wrapping Up Clojure
+
+### The Lisp Paradox
+
+### Core Strengths
+
+### A Good Lisp
+
+#### Concurrency
+
+#### Java Integration
+
+#### Lazy Evaluation
+
+#### Data as Code
+
+### Core Weaknes
+
+#### Prefix Notation
+
+#### Readability
+
+#### Learning Curve
+
+#### Limited Lisp
+
+#### Accessibility
+
+### Conclusão
+
