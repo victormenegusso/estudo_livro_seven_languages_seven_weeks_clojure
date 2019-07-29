@@ -2,6 +2,16 @@
 
 Resumo do capitulo *7. Clojure* do livro **Seven Languages in Seven Weeks** do *Bruce A. Tate*
 
+
+## Sobre o Clojure / LISP
+
+
+Lisp é uma família de linguagens de programação concebida por John McCarthy em 1958, O seu nome vem de List Processing *(a lista é a estrutura de dados fundamental desta linguagem)*. Tanto os dados como o programa são representados como listas, o que permite que a linguagem manipule o código fonte como qualquer outro tipo de dados.
+
+Existem diversos dialetos de Lisp, sendo os mais conhecidos: Common Lisp, Scheme e Clojure
+https://pt.wikipedia.org/wiki/Lisp
+
+
 ## Day 1: Training Luke
 
 *Instalação*
@@ -121,7 +131,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 
 ```
 
-*Simples formas de 'if'*
+#### Simples formas de 'if'
 
 ```clojure
 (if true (println "true it is."))
@@ -141,7 +151,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 
 Em Clojure Listas, Mapas e Vetores são as grandes estrutura de dados
 
-*Lista*
+#### Lista
 
 São uma coleção ordenada, sendo que os elementos podems ser qualquer coisa. No Clojure listas são usadas para código e vetores são usados para data. 
 
@@ -156,7 +166,7 @@ São uma coleção ordenada, sendo que os elementos podems ser qualquer coisa. N
 '(1 2 3)
 ```
 
-Operações
+##### Operações
 
 ```clojure
 (first '(1 2 3))
@@ -178,7 +188,7 @@ obs:
 ;; clojure.lang.PersistentList
 ```
 
-*Vectors*
+#### Vectors
 
 Semelhante a lista, mas são otimizadops para acessos randomicos *(acessar qualquer posição do vertor)*
 
@@ -214,7 +224,7 @@ Semelhante a lista, mas são otimizadops para acessos randomicos *(acessar qualq
 ;; (1 2)
 ```
 
-*SETs*
+#### SETs
 
 Semelhante as listas, mas não possue elementos repetidos.
 
@@ -251,7 +261,7 @@ Semelhante as listas, mas não possue elementos repetidos.
 ;; nil
 ```
 
-*Maps*
+#### Maps
 
 Semelhante as outras linguagens, 'Chave Valor'
 
@@ -283,7 +293,7 @@ Semelhante as outras linguagens, 'Chave Valor'
 ;; "yoda"
 ```
 
-*Definindo funções*
+### Definindo funções
 
 A forma para definir as funções `(defn [params] body)`
 
@@ -309,5 +319,121 @@ A forma para definir as funções `(defn [params] body)`
     (str "use the force." jedi))
 ```
 
-*Bindings*
+### Bindings
 
+Binding -> o processo de atribuição de parâmetros com base nos argumentos de entrada.
+https://clojuredocs.org/clojure.core/binding
+
+destructuring -> é uma maneira de vincular nomes aos valores dentro de uma estrutura de dados. A desestruturação nos permite escrever códigos mais concisos e legíveis.
+https://clojure.org/guides/destructuring
+
+
+```clojure
+(def line [[0 0] [10 20]])
+;;'user/line
+
+(defn line-end [ln] (last ln))
+
+(line-end line)
+[10 20]
+
+;; outra forma de montar a função usando destructuring
+;; usamos o _ para ignorar um paramentro
+(defn line-end [[_ second]] second)
+
+
+(defn print-first-second
+    [[first second]] 
+    (println (str first second)))
+
+(print-first-second [1 2 3])
+;;12
+
+
+(def numeros [[1 2 3] [4 5 6] [7 8 9]])
+
+(defn center [[_ [_ param _] _]] param)
+
+(center numeros)
+;; 5
+
+;; outra forma de definir
+(defn center [[_ [_ param]]] param)
+
+;; outra forma
+(defn center [vetor]
+    (let [[_ [_ param]] vetor] param))
+
+```
+
+*Destructuring em MAP* 
+
+```clojure
+(def jogador {:name "Victor", :game "LOL"})
+
+(let [{name :name} jogador]
+    (str "nome do jogador " name))
+;; "nome do jogador Victor"
+
+(let [{name :name game :game} jogador]
+    (str name game)) 
+;; "VictorLOL"
+```
+
+*Destructuring Combinando MAP e Vector*
+
+```clojure
+(def personagens 
+    [{:nome "jax teller" :serie "SOA"} {:nome "jon snow" :serie "GOT"}])
+
+(let [[_ {nome :nome}] personagens] 
+    (str "nome do segundo personagem: " nome))    
+;; "nome do segundo personagem: jon snow"
+
+```
+
+### Anonymous Functions
+
+Forma de criar `fn [parameters*] body`
+
+```clojure
+(def series ["SOA", "DEXTER"])
+
+;; para ver o tamanho de um texto
+(count "SOA")
+;; 3
+
+;; rodando um map em series
+(map count series)
+;; (3 6)
+
+;; escrevendo uma Anonymous Functions que duplica o count, para roda no map
+(map (fn [serie] 
+    (* 2 (count serie)))
+    series)
+;; (6 12)
+
+;; outra forma de declar
+;; # -> defini uma Anonymous Functions e o % -> é o parametro
+(map #(* 2 (count %)) series)
+;; (6 12)
+
+```
+
+*Apply e filter*
+
+```clojure
+(def v [3 2 1])
+
+(apply + v)
+;; 6
+
+(apply max v)
+;; 3
+
+(filter odd? v)
+;; (3 1)
+
+(filter #(< % 3) v)
+;; (2 1)
+```
