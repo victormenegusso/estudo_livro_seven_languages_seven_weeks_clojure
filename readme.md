@@ -530,56 +530,100 @@ https://clojure.org/reference/sequences
 
 ## Day 3: An Eye for Evil
 
+O Clojure lida com estados mutaveis/concorrencia com o *STM -> Software Transactional Memory*
+
 ### References and Transactional Memory
+
+Quando queremos mudar o estado de uma referenciam devemos usar um escopo de transação.
+
+Vamos ver sobre References, atoms e agents,
+estes durante a operação de leitura não realizam lock ou block.
 
 #### References
 
-### Working with Atoms
+```clojure
+;; criando uma referencia
+(ref "SONS")
 
-#### Building an Atom Cache
+;; criando uma referencia e atribuindo a uma 'variavel'
+(def serie (ref "SONS"))
 
-### Working with Agents
+;; obtendo o valor da referencia
+(deref serie)
+
+;; obtendo o valor da referencia ( segunda maneira)
+@serie
+
+;; tentativa de mudar uma referencia -> falha por não estar em um escopo de transação
+(alter serie str " OF")
+;; Execution error (IllegalStateException) at user/eval2015 (REPL:1).
+;;No transaction running
+
+(dosync (alter serie str " OF"))
+
+
+```
+
+Mesmo sendo trabalhoso evitamos problemas como 'race conditions' e 'deadlocks'
+
+#### Working with Atoms
+
+Em Clojure Atoms são ,bit de estado encapsulado, podemos utilizalos quando temos uma referencia e queremos ter thread safety.
+
+```clojure
+(atom "atom maneiro")
+
+(def cuidado (atom "atom maneiro"))
+
+(reset! cuidado "atom paia")
+```
+
+##### Building an Atom Cache
+
+#### Working with Agents
+
+Agents são semelhante aos atoms, são um wrapped de data.
+Este garante que apenas 1 thread vai mudar o valor o dado por vez, ele bloqueia a execução dos demais ( parece um semaforo )
+
+```clojure
+(defn duplicado [x] (* 2 x))
+
+;; definindo um agente 
+(def agente1 (agent 1))
+
+(send agente1 duplicado)
+```
 
 ### Futures
 
-### What We've Missed
+Uma resposta a Thread
 
-### Metadata
+```clojure
+(def marotagem (future (Thread/sleep 5000) "Dando um Time ai Galera"))
 
-### Java Integration
+;; execução de forma sincrona
+@marotagem
+```
 
-
-### Multimethods
-
-### Thread State
+### Itens não aborados mas interessantes
+ - Metadata -> temos essa possibilidade com clojure
+ - Java Integration -> forte integração com o java
+ - Multimethods -> cara... você consegue fazer polimorfismo com essa parada... então respeita
+ - Thread State -> cara podemos salvar um estado unico por thread.
 
 ## Wrapping Up Clojure
 
-### The Lisp Paradox
+ - The Lisp Paradox -> com Multimethods, macros temos um poder de flexibilidade pesado. Mas isso é sua fraqueza tambem, macros são poderosa para desenvolvedores com experiencia, nas mãos erradas.... "Grandes poderes Grandes Responsabilidades" 
+ - Pontos fortes
+   - A Good Lisp -> muitos consideram o Clojure um dos melhores lisps, tem redução do numero de  pararenteses. 
+   - O Ecosistema -> ta usando a JVM e isso é mais que suficiente.
+   - Concorrência -> O Clojure tira da mão do DEV o controle de concorrência
+   - Integração com o java
+   - Lazy Evaluation -> reduz o ovehead de computação
+   - Data as Code -> Programas são listas.
+ - Pontos Fracos
+   - legibilidade ( eu ainda tenho a opnião que legibilidade vai do costume do peão)
+   - Curva de Aprendizado -> é não é facil.
+   - Lisp Limitado -> temos o problema com recursão em caldo. Não tem Reader Macros.
 
-### Core Strengths
-
-### A Good Lisp
-
-#### Concurrency
-
-#### Java Integration
-
-#### Lazy Evaluation
-
-#### Data as Code
-
-### Core Weaknes
-
-#### Prefix Notation
-
-#### Readability
-
-#### Learning Curve
-
-#### Limited Lisp
-
-#### Accessibility
-
-### Conclusão
 
