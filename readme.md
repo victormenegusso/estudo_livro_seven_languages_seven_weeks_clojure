@@ -2,15 +2,26 @@
 
 Resumo do capitulo *7. Clojure* do livro **Seven Languages in Seven Weeks** do *Bruce A. Tate*
 
-
 ## Sobre o Clojure / LISP
-
 
 Lisp é uma família de linguagens de programação concebida por John McCarthy em 1958, O seu nome vem de List Processing *(a lista é a estrutura de dados fundamental desta linguagem)*. Tanto os dados como o programa são representados como listas, o que permite que a linguagem manipule o código fonte como qualquer outro tipo de dados.
 
 Existem diversos dialetos de Lisp, sendo os mais conhecidos: Common Lisp, Scheme e Clojure
 https://pt.wikipedia.org/wiki/Lisp
 
+**Todos os Lisps**
+- Depois de Fortran, Lisp é a mais velha linguagem ativa comercialmente.
+- É uma linguagem funcional, mas não pura
+- O seu nome vem de List Processing
+ - uma chamada de função é o primeiro elemento da lista
+ - usa sua própria 'Estrutura de dados' para expressar código. *data as code*
+ - Esses dois primeiros pontos, fazem que o lisp seja uma linguagem ideal para metaprogramação.
+
+**JVM**
+ - podemos reaproveitar tudo da JVM
+
+**Concorrencia**
+ O clojure trabalha muito bem com concorrencia, existe um conceito chamado 'Transactional memory' que funciona semelhante a 'Transactional database'.
 
 ## Day 1: Training Luke
 
