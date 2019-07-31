@@ -114,7 +114,7 @@ Semelhante a lista, mas não possui elemento repetido
     (str name game)) 
 ```
 
-#Funções anonimas
+# Funções anonimas
 
 - queremos rodar um map para um vector, aplicando para cada elemento uma função que conta(dobrado) o numero de caracteres que tem o texto.
 
@@ -211,10 +211,61 @@ https://clojure.org/about/functional_programming#_recursive_looping
 ```
 # Concorrencia 
 
+## Escopo de transação
+
+```clojure
+;; criando uma referencia
+(ref "SONS")
+
+;; criando uma referencia e atribuindo a uma 'variavel'
+(def serie (ref "SONS"))
+
+;; obtendo o valor da referencia
+(deref serie)
+
+;; obtendo o valor da referencia ( segunda maneira)
+@serie
+
+;; tentativa de mudar uma referencia -> falha por não estar em um escopo de transação
+(alter serie str " OF")
+;; Execution error (IllegalStateException) at user/eval2015 (REPL:1).
+;;No transaction running
+
+(dosync (alter serie str " OF"))
+```
+
+## Atoms
+Em Clojure Atoms são ,bit de estado encapsulado, podemos utilizalos quando temos uma referencia e queremos ter thread safety.
+
+```clojure
+(atom "atom maneiro")
+
+(def cuidado (atom "atom maneiro"))
+
+(reset! cuidado "atom paia")
+```
+
+## Agents
+Agents são semelhante aos atoms, são um wrapped de data.
+Este garante que apenas 1 thread vai mudar o valor o dado por vez, ele bloqueia a execução dos demais ( parece um semaforo )
+```clojure
+(defn duplicado [x] (* 2 x))
+
+;; definindo um agente 
+(def agente1 (agent 1))
+
+(send agente1 duplicado)
+```
+
 # defrecord and protocls 
 
+Para o clojure, as melhores partes da OO são os tipos e protocolos ( interface ) e a pior coisa é a herança.
+
+Com o defrecord e protocol, estamos escrevendo código nativo para JVM sem Java. 
+
 # Lazy Evaluation
-????
+Isso é insano
+
 
 # Itens não aborados mas interessantes
  - Metadata -> temos essa possibilidade com clojure
