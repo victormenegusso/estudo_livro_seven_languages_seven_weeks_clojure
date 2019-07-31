@@ -533,11 +533,91 @@ https://clojure.org/reference/sequences
 
 ### Lazy Evaluation
 
-### Infinite Sequences and take
+```clojure
+;; uma sequencia finita
+(range 1 10)
+;; (1 2 3 4 5 6 7 8 9)
 
+;; uma sequencia infinita - Returns a lazy
+(repeat 1)
+
+;; com sequencias infinitas, precisamos obter um subconjuto finito, para isso usamos o 'take'
+(take 3 (repeat "123 testando"))
+
+(defn fib-pair [[a b]] )
+
+
+;; 
+(defn factorial [n] (apply * (take n (iterate inc 1)))
+
+(factorial 5)
+;;120
+
+``` 
 ### defrecord and protocls
 
+Para o clojure, as melhores partes da OO são os tipos e protocolos ( interface ) e a pior coisa é a herança.
+
+Com o defrecord e protocol, estamos escrevendo código nativo para JVM sem Java.
+
+```clojure
+;; especie de interface....
+;; estamos falando que bussola, tem 3 funções 
+(defprotocol Bussola
+    (direcao [c])
+    (esquerda [c])
+    (direita [c]))
+
+(def direcoes [:norte :leste :sul :oeste])
+
+;; rem -> % do java
+(defn virar [base montante]
+    (rem (+ base montante) (count direcoes)))
+
+(virar 1 1)
+;; 2
+
+;; implementando o protocolo
+(defrecord BussolaBacana
+    [rolamento]
+    Bussola)
+```
+
 ### Macros
+
+```clojure
+(defn unless 
+    [test body] 
+    (println "da funcao")
+    (if (not test) 
+        (body)))
+
+;; gostariamos que só rodasse o print, caso a função seja false...
+(unless true (println "parametro"))
+;;parametro
+;;da funcao
+;;nil
+
+;; Como avaliamos o paramentro antes de executar a função, o print 'parametro' foi executado primeiro
+
+(defmacro unless 
+    [test body]
+    (println "da funcao")
+    (list 'if (list 'not test) body))
+
+(defn unless [test body] (if (not test) body))
+
+(unless true (println "parametro"))
+;;da funcao
+;;nil
+
+(unless false (println "parametro"))
+;;da funcao
+;;parametro
+;;nil
+
+```
+
 
 ## Day 3: An Eye for Evil
 
