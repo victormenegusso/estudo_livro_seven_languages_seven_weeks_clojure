@@ -1,6 +1,12 @@
 # Intro
 
-Resumo do capitulo *7. Clojure* do livro **Seven Languages in Seven Weeks** do *Bruce A. Tate*
+Temos uma guilda para a leitura do livro **Seven Languages in Seven Weeks** do *Bruce A. Tate*,
+
+# Apresentação
+[roteiro para apresentação](roteiro-apresentacao.md)
+
+# Resumo 
+Resumo do capitulo *7. Clojure*
 
 ## Sobre o Clojure / LISP
 
@@ -132,7 +138,7 @@ Esta forma de chamar operações se chama *'prefix notation'*, isso pode assusta
 ;; false
 
 (= 1 1)
-;; false
+;; true
 
 (class true)
 ;; java.lang.Boolean
@@ -293,7 +299,7 @@ Semelhante as outras linguagens, 'Chave Valor'
 ```
 
 ```clojure
-(def mentors {:darth-vador "obi wan", :luke "yoda"})
+(def mentors {:darth-vader "obi wan", :luke "yoda"})
 ;; #'user/mentors
 
 ;; Busca por chave
